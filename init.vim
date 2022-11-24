@@ -1,7 +1,7 @@
 syntax on
 
 set noerrorbells
-set sw=2
+set sw=4
 set expandtab
 set smartindent
 set number
@@ -16,7 +16,7 @@ set clipboard=unnamedplus
 set encoding=utf-8
 set cursorline
 set termguicolors
-set tabstop=2 softtabstop=2
+set tabstop=4 softtabstop=4
 set showmatch
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 set splitright
@@ -80,7 +80,7 @@ noremap <right> <nop>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <Leader>s <Plug>(easymotion-s2)
-nnoremap <Leader>e :NERDTreeFind<CR>
+nnoremap <Leader>e :NERDTreeToggle<CR>
 vnoremap ++ <Plug>NERDCommenterToggle
 nnoremap ++ <Plug>NERDCommenterToggle
 nnoremap <silent> <right> :vertical resize +5<CR>
@@ -90,6 +90,7 @@ nnoremap <silent> <down> :resize +5<CR>
 nnoremap <leader>t :split<CR>:ter<CR>:resize 10<CR>
 nnoremap <leader>ru :resize 30<CR>
 nnoremap <leader>rd :resize 10<CR>
+inoremap kj <ESC>
 vmap ++ <Plug>NERDCommenterToggle
 nnoremap <Leader>f :Prettier<CR>
 
@@ -107,7 +108,7 @@ let g:signify_sign_show_text=1
 let g:vcoolor_lowercase = 1
 
 "NERDTree
-let NERDTreeQuitOnOpen=1
+let NERDTreeQuitOnOpen=0
 let g:NERDTreeIgnore=['node_modules', '.git', '.next']
 let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Modified'  :'M',
@@ -121,7 +122,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Clean'     :'✔︎',
                 \ 'Unknown'   :'?',
                 \ }
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden=0
 
 "Closetag
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.tsx'
@@ -139,16 +140,26 @@ let g:closetag_close_shortcut = '<leader>>'
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
 
 "COC
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
+"You have to remap <cr> to make it confirms completion.
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+"To make <cr> select the first completion item and confirm the completion when no item has been selected:
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
@@ -156,10 +167,9 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-let g:coc_snippet_next = '<TAB>'
-let g:coc_snippet_prev = '<s-TAB>'
+
+"let g:coc_snippet_next = '<TAB>'
+"let g:cc_snippet_prev = '<s-TAB>'
 let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-git', 'coc-css', 'coc-cssmodules', 'coc-emmet', 'coc-html', 'coc-html-css-support', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-stylelintplus', 'coc-pairs']
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
