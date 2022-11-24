@@ -13,7 +13,7 @@ set nobackup
 set incsearch
 set ignorecase
 set clipboard=unnamedplus
-set encoding=utf-8
+set encoding=UTF-8
 set cursorline
 set termguicolors
 set tabstop=4 softtabstop=4
@@ -83,16 +83,17 @@ nnoremap <Leader>s <Plug>(easymotion-s2)
 nnoremap <Leader>e :NERDTreeToggle<CR>
 vnoremap ++ <Plug>NERDCommenterToggle
 nnoremap ++ <Plug>NERDCommenterToggle
-nnoremap <silent> <right> :vertical resize +5<CR>
-nnoremap <silent> <left> :vertical resize -5<CR>
-nnoremap <silent> <up> :resize +5<CR>
-nnoremap <silent> <down> :resize +5<CR>
+nnoremap <silent> <S-l> :vertical resize +5<CR>
+nnoremap <silent> <S-h> :vertical resize -5<CR>
+nnoremap <silent> <S-k> :resize +5<CR>
+nnoremap <silent> <S-j> :resize -5<CR>
 nnoremap <leader>t :split<CR>:ter<CR>:resize 10<CR>
 nnoremap <leader>ru :resize 30<CR>
 nnoremap <leader>rd :resize 10<CR>
 inoremap kj <ESC>
 vmap ++ <Plug>NERDCommenterToggle
 nnoremap <Leader>f :Prettier<CR>
+tnoremap kj <C-\><C-n>
 
 "Configs
 
@@ -167,9 +168,6 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-
-"let g:coc_snippet_next = '<TAB>'
-"let g:cc_snippet_prev = '<s-TAB>'
 let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-git', 'coc-css', 'coc-cssmodules', 'coc-emmet', 'coc-html', 'coc-html-css-support', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-stylelintplus', 'coc-pairs']
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
