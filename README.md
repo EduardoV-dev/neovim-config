@@ -15,5 +15,6 @@ After installing **Vim Plug**,  ***Neovim*** it's ready for plugins installation
 * Open `init.vim` by typing in the terminal `nvim ~/.config/nvim/init.vim`.
 * Open the `Vim's Command Mode` by typing `:` while in `Normal Mode`, then type `source %`.
 * For installing the plugins, execute the next command while in `Vim's Command Mode`: `PlugInstall`.
+* Install a Nerd Font, so that icons for NerdTreePlugin can be displayed properly (set terminal with the same Nerd Font for aesthetic purposes): Current nerd font: SpaceMono Nerd Font
 
 ### And that's it!.
