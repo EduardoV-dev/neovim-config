@@ -23,6 +23,7 @@ set splitright
 set splitbelow
 set showcmd
 set noshowmode
+set hidden
 
 set colorcolumn=120
 highlight ColorColumn ctermbg=0 guibg=lightgrey
@@ -40,6 +41,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'lilydjwg/colorizer'
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'bagrat/vim-buffet'
 
 "Git integration
 Plug 'mhinz/vim-signify'
@@ -50,7 +52,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 "Functionality
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'KabbAmine/vCoolor.vim'
 Plug 'alvan/vim-closetag'
@@ -84,7 +86,7 @@ nmap <C-_> <Plug>NERDCommenterToggle
 vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
 
 nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
+nnoremap <leader>qw :q<CR>
 nnoremap <Leader>s <Plug>(easymotion-s2)
 nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <silent> <S-l> :vertical resize +5<CR>
@@ -92,14 +94,22 @@ nnoremap <silent> <S-h> :vertical resize -5<CR>
 nnoremap <silent> <S-k> :resize +5<CR>
 nnoremap <silent> <S-j> :resize -5<CR>
 nnoremap <leader>t :split<CR>:ter<CR>:resize 10<CR>
-nnoremap <leader>ru :resize 30<CR>
-nnoremap <leader>rd :resize 10<CR>
 nnoremap <Leader>f :Prettier<CR>
 
 inoremap <C-h> <C-W>
 inoremap kj <ESC>
 tnoremap kj <C-\><C-n>
-"Configs
+
+" M is ALT key
+noremap <M-l> :bn<CR>
+noremap <M-h> :bp<CR>
+noremap <leader>q :Bw<CR>
+noremap <C-t> :tabnew split<CR>
+
+"Config
+
+" Airline
+let g:airline_theme = "ayu_mirage"
 
 "Signify
 let g:signify_sign_add="+"
@@ -113,7 +123,6 @@ let g:signify_sign_show_text=1
 let g:vcoolor_lowercase = 1
 
 "NERDTree
-let NERDTreeQuitOnOpen=0
 let g:NERDTreeIgnore = ['\.git$']
 let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Modified'  :'M',
@@ -128,6 +137,27 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Unknown'   :'?',
                 \ }
 let NERDTreeShowHidden=1
+
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+"Vim Buffet
+let g:buffet_powerline_separators = 1
+let g:buffet_tab_icon = "\uf00a"
+let g:buffet_left_trunc_icon = "\uf0a8"
+let g:buffet_right_trunc_icon = "\uf0a9"
+
+function! g:BuffetSetCustomColors()
+  hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#555555 guifg=#f2f2f2
+  hi! BuffetActiveBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#333333 guifg=#f2f2f2
+  hi! BuffetBuffer ctermbg=5 ctermfg=8 guibg=#252525 guifg=#ffffff 
+  hi! BuffetTab cterm=NONE ctermbg=5 ctermfg=5 guibg=#333333 guifg=#f2f2f2
+endfunction
 
 "Closetag
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.tsx'
@@ -174,4 +204,4 @@ endif
 
 let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-git', 'coc-css', 'coc-cssmodules', 'coc-emmet', 'coc-html', 'coc-html-css-support', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-stylelintplus', 'coc-pairs']
 
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
