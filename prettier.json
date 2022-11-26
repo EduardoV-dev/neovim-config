@@ -1,0 +1,16 @@
+{
+    "coc.preferences.formatOnSave": true,
+
+    "prettier.formatterPriority": 1,
+    "prettier.semi": true,
+    "prettier.tabWidth": 4,
+    "prettier.endOfLine": "auto",
+    "prettier.requireConfig": false,
+    "prettier.printWidth": 80,
+    "prettier.singleQuote": true,
+    "prettier.arrowParens": "always",
+    "prettier.trailingComma": "all",
+    "prettier.jsxSingleQuote": false,
+    "prettier.bracketSpacing": true,
+    "prettier.bracketSameLine": false
+}
