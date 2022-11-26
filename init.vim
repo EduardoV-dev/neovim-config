@@ -39,6 +39,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'lilydjwg/colorizer'
 Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
 
 "Git integration
 Plug 'mhinz/vim-signify'
@@ -56,6 +57,7 @@ Plug 'alvan/vim-closetag'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
+Plug 'eslint/eslint'
 
 "Code completion
 Plug 'scrooloose/nerdcommenter'
@@ -77,12 +79,14 @@ noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
 
+" Comment code as in vscode
+nmap <C-_> <Plug>NERDCommenterToggle
+vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
+
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <Leader>s <Plug>(easymotion-s2)
 nnoremap <Leader>e :NERDTreeToggle<CR>
-vnoremap ++ <Plug>NERDCommenterToggle
-nnoremap ++ <Plug>NERDCommenterToggle
 nnoremap <silent> <S-l> :vertical resize +5<CR>
 nnoremap <silent> <S-h> :vertical resize -5<CR>
 nnoremap <silent> <S-k> :resize +5<CR>
@@ -90,11 +94,11 @@ nnoremap <silent> <S-j> :resize -5<CR>
 nnoremap <leader>t :split<CR>:ter<CR>:resize 10<CR>
 nnoremap <leader>ru :resize 30<CR>
 nnoremap <leader>rd :resize 10<CR>
-inoremap kj <ESC>
-vmap ++ <Plug>NERDCommenterToggle
 nnoremap <Leader>f :Prettier<CR>
-tnoremap kj <C-\><C-n>
 
+inoremap <C-h> <C-W>
+inoremap kj <ESC>
+tnoremap kj <C-\><C-n>
 "Configs
 
 "Signify
@@ -110,7 +114,7 @@ let g:vcoolor_lowercase = 1
 
 "NERDTree
 let NERDTreeQuitOnOpen=0
-let g:NERDTreeIgnore=['node_modules', '.git', '.next']
+let g:NERDTreeIgnore = ['\.git$']
 let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Modified'  :'M',
                 \ 'Staged'    :'A',
@@ -123,7 +127,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Clean'     :'✔︎',
                 \ 'Unknown'   :'?',
                 \ }
-let NERDTreeShowHidden=0
+let NERDTreeShowHidden=1
 
 "Closetag
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.tsx'
