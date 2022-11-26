@@ -22,6 +22,6 @@ After installing **Vim Plug**,  ***Neovim*** it's ready for plugins installation
 When setting up the neovim environment, prettier won't have rules and won't format on save, do the next for solving this issue: 
 
 * Enter vim and command mode, type `:CocConfig` and hit enter to enter the config file for coc.
-* Copy the content of prettier.json file in this repo and paste it into this coc-settings.json file.
+* Copy the content of `prettier.json` file in this repo and paste it into the `coc-settings.json` file.
 
 ### And that's it!.
