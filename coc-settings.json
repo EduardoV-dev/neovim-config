@@ -1,6 +1,13 @@
 {
     "coc.preferences.formatOnSave": true,
 
+    "diagnostic.virtualText": true,
+    "diagnostic.virtualTextCurrentLineOnly": false,
+    "diagnostic.refreshOnInsertMode": true,
+    "diagnostic.errorSign": "\uf05e",
+    "diagnostic.infoSign": "\uf071",
+    "diagnostic.checkCurrentLine": true,
+
     "prettier.formatterPriority": 1,
     "prettier.semi": true,
     "prettier.tabWidth": 4,
