@@ -17,11 +17,15 @@ After installing **Vim Plug**,  ***Neovim*** it's ready for plugins installation
 * For installing the plugins, execute the next command while in `Vim's Command Mode`: `PlugInstall`.
 * Install a Nerd Font, so that icons for NerdTreePlugin can be displayed properly (set terminal with the same Nerd Font for aesthetic purposes): Current nerd font: SpaceMono Nerd Font
 
-## Prettier global config
+## COC config
 
 When setting up the neovim environment, prettier won't have rules and won't format on save, do the next for solving this issue: 
 
 * Enter vim and command mode, type `:CocConfig` and hit enter to enter the config file for coc.
-* Copy the content of `prettier.json` file in this repo and paste it into the `coc-settings.json` file.
+* Copy the content of `coc-settings.json` file in this repo and paste it into the `coc-settings.json` local file that just opened.
+
+## Extra tools for correct functioning
+
+* Install [ripgrep](https://github.com/BurntSushi/ripgrep).
 
 ### And that's it!.
