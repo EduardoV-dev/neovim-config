@@ -30,6 +30,8 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 "Themes
 Plug 'ayu-theme/ayu-vim'
 
@@ -41,6 +43,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'lilydjwg/colorizer'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'bagrat/vim-buffet'
+Plug 'styled-components/vim-styled-components'
 
 "Git integration
 Plug 'mhinz/vim-signify'
@@ -57,7 +60,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'KabbAmine/vCoolor.vim'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
-Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Plug 'kien/ctrlp.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 
@@ -94,6 +99,8 @@ nnoremap <silent> <S-k> :resize +5<CR>
 nnoremap <silent> <S-j> :resize -5<CR>
 nnoremap <leader>t :split<CR>:ter<CR>:resize 10<CR>
 nnoremap <leader>f :Prettier<CR>
+nnoremap <leader>sf :Rg<CR>
+nnoremap <C-p> :Files<CR>
 
 inoremap <C-h> <C-W>
 inoremap kj <ESC>
@@ -110,8 +117,8 @@ nnoremap <M-right> <C-w>L
 
 "Config
 
-"CtrlP
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
+" Fzf
+let $FZF_DEFAULT_COMMAND='find . \( -name node_modules -o -name .git -o -name .next -o -name build \) -prune -o -print'
 
 " Airline
 let g:airline_theme = "ayu_mirage"
@@ -238,6 +245,6 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-git', 'coc-css', 'coc-cssmodules', 'coc-emmet', 'coc-html', 'coc-html-css-support', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-stylelintplus', 'coc-pairs']
+let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-git', 'coc-css', 'coc-cssmodules', 'coc-emmet', 'coc-html', 'coc-html-css-support', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-stylelintplus', 'coc-pairs', 'coc-styled-components']
 
 command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
