@@ -2,6 +2,7 @@ syntax on
 
 set noerrorbells
 set sw=4
+set nohlsearch
 set expandtab
 set smartindent
 set number
@@ -18,14 +19,13 @@ set cursorline
 set termguicolors
 set tabstop=4 softtabstop=4
 set showmatch
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 set splitright
 set splitbelow
 set showcmd
 set noshowmode
 set hidden
-
 set colorcolumn=120
+
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -39,7 +39,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'lilydjwg/colorizer'
-Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'bagrat/vim-buffet'
 
@@ -53,13 +52,14 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 "Functionality
 Plug 'preservim/nerdtree'
+Plug 'unkiwii/vim-nerdtree-sync' " Follows open file in nerdtree
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'KabbAmine/vCoolor.vim'
 Plug 'alvan/vim-closetag'
-Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
-Plug 'eslint/eslint'
+Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
 
 "Code completion
 Plug 'scrooloose/nerdcommenter'
@@ -87,14 +87,13 @@ vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>qw :q<CR>
-nnoremap <Leader>s <Plug>(easymotion-s2)
-nnoremap <Leader>e :NERDTreeToggle<CR>
+nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <silent> <S-l> :vertical resize +5<CR>
 nnoremap <silent> <S-h> :vertical resize -5<CR>
 nnoremap <silent> <S-k> :resize +5<CR>
 nnoremap <silent> <S-j> :resize -5<CR>
 nnoremap <leader>t :split<CR>:ter<CR>:resize 10<CR>
-nnoremap <Leader>f :Prettier<CR>
+nnoremap <leader>f :Prettier<CR>
 
 inoremap <C-h> <C-W>
 inoremap kj <ESC>
@@ -104,9 +103,15 @@ tnoremap kj <C-\><C-n>
 noremap <M-l> :bn<CR>
 noremap <M-h> :bp<CR>
 noremap <leader>q :Bw<CR>
-noremap <C-t> :tabnew split<CR>
+
+nnoremap <leader>vs :vsp<CR>
+nnoremap <M-left> <C-w>H 
+nnoremap <M-right> <C-w>L 
 
 "Config
+
+"CtrlP
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 
 " Airline
 let g:airline_theme = "ayu_mirage"
@@ -137,6 +142,8 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Unknown'   :'?',
                 \ }
 let NERDTreeShowHidden=1
+let g:nerdtree_sync_cursorline = 1
+let g:NERDSpaceDelims = 1
 
 " Start NERDTree when Vim starts with a directory argument.
 autocmd StdinReadPre * let s:std_in=1
@@ -151,6 +158,8 @@ let g:buffet_powerline_separators = 1
 let g:buffet_tab_icon = "\uf00a"
 let g:buffet_left_trunc_icon = "\uf0a8"
 let g:buffet_right_trunc_icon = "\uf0a9"
+let g:buffet_new_buffer_name = "+"
+let g:buffet_modified_icon = ' *'
 
 function! g:BuffetSetCustomColors()
   hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#555555 guifg=#f2f2f2
@@ -175,6 +184,33 @@ let g:closetag_close_shortcut = '<leader>>'
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
 
 "COC
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use Z to show documentation in preview window.
+nnoremap <silent> Z :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('Z', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <F2> <Plug>(coc-rename)
 
 "You have to remap <cr> to make it confirms completion.
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
