@@ -30,8 +30,6 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
 "Themes
 Plug 'ayu-theme/ayu-vim'
 
@@ -62,9 +60,9 @@ Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Plug 'kien/ctrlp.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 "Code completion
 Plug 'scrooloose/nerdcommenter'
@@ -99,7 +97,7 @@ nnoremap <silent> <S-k> :resize +5<CR>
 nnoremap <silent> <S-j> :resize -5<CR>
 nnoremap <leader>t :split<CR>:ter<CR>:resize 10<CR>
 nnoremap <leader>f :Prettier<CR>
-nnoremap <leader>sf :Rg<CR>
+nnoremap <leader>fs :Rg<CR>
 nnoremap <C-p> :Files<CR>
 
 inoremap <C-h> <C-W>
