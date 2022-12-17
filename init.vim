@@ -65,7 +65,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 "Code completion
-Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
@@ -79,14 +79,15 @@ colorscheme ayu
 nmap <F5> :source ~/.config/nvim/init.vim<CR>
 vmap <F5> :source ~/.config/nvim/init.vim<CR>
 
+noremap q <nop>
 noremap <up> <nop>
 noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
 
 " Comment code as in vscode
-nmap <C-_> <Plug>NERDCommenterToggle
-vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
+nmap <C-_> gcc
+vmap <C-_> gc
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>qw :q<CR>
@@ -101,6 +102,8 @@ nnoremap <leader>fs :Rg<CR>
 nnoremap <C-p> :Files<CR>
 
 inoremap <C-h> <C-W>
+inoremap <C-Del> <C-o>dw
+
 inoremap kj <ESC>
 tnoremap kj <C-\><C-n>
 
@@ -114,6 +117,9 @@ nnoremap <M-left> <C-w>H
 nnoremap <M-right> <C-w>L 
 
 "Config
+
+" Vim Commentary
+autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
 
 " Fzf
 let $FZF_DEFAULT_COMMAND='find . \( -name node_modules -o -name .git -o -name .next -o -name build \) -prune -o -print'
