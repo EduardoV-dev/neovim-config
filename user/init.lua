@@ -33,7 +33,7 @@ local config = {
         },
         n = {
             ["q"] = false, -- Disables the record mode in vim
-            ["<leader>vs"] = { "<cmd>vsplit", desc = "Virtual split" }, -- Creates a virtual split for a selected file
+            ["<leader>vs"] = { "<cmd>vsplit<cr>", desc = "Vertical split" }, -- Creates a virtual split for a selected file
         },
         t = {
             ["kj"] = { "<C-\\><C-n>", desc = "Exit terminal insert mode" }
@@ -57,17 +57,17 @@ local config = {
                 -- Set a formatter
                 null_ls.builtins.formatting.stylua,
                 null_ls.builtins.formatting.prettier.with({ extra_args = {
-                    "--allow-parens=always",
-                    "--bracket-same-line",
+                    "--allow-parens always",
+                    "--no-bracket-same-line",
                     "--bracket-spacing",
-                    "--end-of-line=auto",
+                    "--end-of-line auto",
                     "--no-jsx-single-quote",
                     "--no-single-attribute-per-line",
-                    "--print-width=80",
+                    "--print-width 80",
                     "--semi",
                     "--single-quote",
-                    "--tab-width=4",
-                    "--trailing-comma=all",
+                    "--tab-width 4",
+                    "--trailing-comma all",
                 } }),
             }
 
